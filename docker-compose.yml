@@ -1,0 +1,26 @@
+---
+version: '3'
+
+services:
+  web:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./site/:/usr/share/nginx/html/
+      - ./conf/:/etc/nginx/conf.d/
+    networks:
+      - nginxphp
+
+  php:
+    image: php:7.4-fpm
+    volumes:
+      - ./site/:/usr/share/nginx/html/
+    expose:
+      - 9000
+    networks:
+      - nginxphp      
+
+networks:
+  nginxphp:
